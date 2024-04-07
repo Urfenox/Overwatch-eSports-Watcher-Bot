@@ -1,0 +1,5 @@
+
+*.lnk
+__pycache__
+*.zip
+*.log

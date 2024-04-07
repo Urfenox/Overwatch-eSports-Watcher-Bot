@@ -1,0 +1,32 @@
+{
+    "title": "Overwatch eSport Watcher",
+    "claimed": 0,
+    "started": 0,
+    "uptime": "0:0:0",
+    "configuration": {
+        "PUSHOVER": {
+            "TOKEN": "",
+            "USER": "",
+            "DEVICE": ""
+        },
+        "MONITOR": {
+            "SCREEN": 0,
+            "AREA": [
+                {
+                    "BONUS": [1685, 975, 1740, 1000],
+                    "FINISHER": [465, 919, 1045, 945]
+                },
+                {
+                    "BONUS": [3600, 975, 3630, 1000],
+                    "FINISHER": [465, 919, 1045, 945]
+                }
+            ]
+        },
+        "WAIT_TIME": 120,
+        "CHANNEL_NAME": "twitch.tv/ow_esports",
+        "webbrowser": {
+            "binary": "C:\\Users\\Usuario\\AppData\\Local\\Vivaldi\\Application\\vivaldi.exe",
+            "arguments": "--profile-directory=\"Profile 1\""
+        }
+    }
+}
