@@ -74,7 +74,7 @@ while True:
     bc.printInformation()
     util.AddToLog("Buscando diferencias...")
     if bc.checkBase():
-        util.AddToLog("Bonificación encontrada en región seleccionada!")
+        util.AddToLog("Bonificación encontrada!")
     if fc.checkBase():
         util.AddToLog("La transmisión ha finalizado!")
         uptime = fc.getUptime(INSTANCE_INFO["started"])

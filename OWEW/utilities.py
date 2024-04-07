@@ -44,4 +44,4 @@ class Utilities:
             return self.AddToLog(str("({}) {}\n{}\n     (X)".format(prioridad, titulo, mensaje)))
     
     def setTopMost(self, hwnd):
-        win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 665, 1, 525, 200, 0)
+        win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 665, 0, 525, 170, 0)
