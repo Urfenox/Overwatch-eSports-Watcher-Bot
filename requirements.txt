@@ -1,0 +1,4 @@
+Pillow==10.1.0
+PyAutoGUI==0.9.53
+pywin32==306
+requests==2.30.0
