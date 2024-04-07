@@ -16,7 +16,8 @@ https://dev.crizacio.com/docs/Overwatch-eSports-Watcher-Bot
     `pip pywin32 install`  
     `pip pillow install`  
     `pip requests install`  
-    o, a traves de `requirements.txt`:  
+    `pip opencv-python install`  
+    o, a través de `requirements.txt`:  
     `pip install -r requirements.txt`  
  2. Luego toca modificar `config.json` dentro de la carpeta `/OWEW`:  
     `title`: Nombre para identificar la ventana. (Ni símbolos, ni números)  
@@ -43,7 +44,8 @@ while (1) {
     Write-Host -NoNewline "`rX: $X | Y: $Y"
 }
 ```
-> Es posible (99% seguro) que mi configuración no te funcione.
+> Es posible (99% seguro) que mi configuración de área Bonus SI te funcione.
+> Es posible (99% seguro) que mi configuración de área Finisher NO te funcione.
   
 Para esta tarea, te adjunto un pantallazo que explica todo.  
 ![Pantallazo](https://dev.crizacio.com/docs/assets/images/OWES-main-screenshot.png)  

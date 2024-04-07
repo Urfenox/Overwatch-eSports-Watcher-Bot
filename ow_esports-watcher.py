@@ -58,24 +58,26 @@ from OWEW.bonus import BonusCatcher
 from OWEW.finisher import FinisherCatcher
 
 print("Creando instancias...")
+time.sleep(5)
 print("    Bonus area: {}".format(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BONUS"]))
 print("    Finish area: {}".format(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"]))
-bc = BonusCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BONUS"])
+bc = BonusCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BONUS"], WORKSPACE)
 fc = FinisherCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"])
-time.sleep(1)
-
-print("Creando bases...")
-bc.createBase()
-fc.createBase()
+fc.createBase() # crea una imagen de referencia
 time.sleep(1)
 
 while True:
     os.system("cls")
     bc.printInformation()
     util.AddToLog("Buscando diferencias...")
-    if bc.checkBase():
+    if bc.checkForBonus():
         util.AddToLog("Bonificación encontrada!")
     if fc.checkBase():
+        # si una nueva imagen tiene diferencias a la de referencia
+        #   esto puede ser cierto si:
+        #       - se realizo un RAID a otro canal (imposible mantener los mismos tags)
+        #       - la transmision finalizo (cuando una transmision termina, los tags desaparecen)
+        #       - algo interfiere con la visilidad de los tags (una ventana, tooltip, la pestaña no esta activa, etc)
         util.AddToLog("La transmisión ha finalizado!")
         uptime = fc.getUptime(INSTANCE_INFO["started"])
         INSTANCE_INFO["uptime"] = str("{}h:{}m:{}s".format(uptime[0], uptime[1], uptime[2]))
