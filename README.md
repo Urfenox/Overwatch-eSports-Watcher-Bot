@@ -7,29 +7,30 @@ https://dev.crizacio.com/docs/Overwatch-eSports-Watcher-Bot
 ### Features
  - Abre un navegador y accede a una transmisión.  
  - Reclama los botines por mirar durante 15 minutos.  
+ - Notifica cuando comienza una predicción.  
  - Apaga el equipo cuando una transmisión finaliza.  
  - Realiza notificaciones mediante Pushover.  
   
 ## Uso
  1. Primero descarga las librerías necesarias con `pip`:  
-    `pip pyautogui install`  
-    `pip pywin32 install`  
-    `pip pillow install`  
-    `pip requests install`  
-    `pip opencv-python install`  
+        `pip pyautogui install`  
+        `pip pywin32 install`  
+        `pip pillow install`  
+        `pip requests install`  
+        `pip opencv-python install`  
     o, a través de `requirements.txt`:  
-    `pip install -r requirements.txt`  
+        `pip install -r requirements.txt`  
  2. Luego toca modificar `config.json` dentro de la carpeta `/OWEW`:  
-    `title`: Nombre para identificar la ventana. (Ni símbolos, ni números)  
-    `configuration.PUSHOVER`: Credenciales de Pushover: USER y APP TOKEN, junto con el dispositivo que recibirá notificación.  
-    `configuration.MONITOR`: Configuración de pantalla y áreas.  
-    `configuration.MONITOR.SCREEN`: Pantalla a utilizar. (Configuración de pantalla)  
-    `configuration.MONITOR.AREA`: Definiciones de áreas para cada pantalla. (Hay dos configuraciónes, para dos monitores uno al lado del otro. Pero puedes agregar más)  
-    `configuration.WAIT_TIME`: Tiempo de espera entre verificaciones de estado. (120s=2minutos por defecto)  
-    `configuration.CHANNEL_NAME`: Dirección del canal a ir.  
-    `configuration.webbrowser`: Para generar la instancia del navegador.  
-    `configuration.webbrowser.binary`: Ruta del ejecutable del navegador preferido.  
-    `configuration.webbrowser.arguments`: Línea de argumentos para ejecutar el binario. (Actualmente, inicia con el Perfil 1 seleccionado)  
+        `title`: Nombre para identificar la ventana. (Ni símbolos, ni números)  
+        `configuration.PUSHOVER`: Credenciales de Pushover: USER y APP TOKEN, junto con el dispositivo que recibirá notificación.  
+        `configuration.MONITOR`: Configuración de pantalla y áreas.  
+        `configuration.MONITOR.SCREEN`: Pantalla a utilizar. (Configuración de pantalla)  
+        `configuration.MONITOR.AREA`: Definiciones de áreas para cada pantalla. (Hay dos configuraciónes, para dos monitores uno al lado del otro. Pero puedes agregar más)  
+        `configuration.WAIT_TIME`: Tiempo de espera entre verificaciones de estado. (120s=2minutos por defecto)  
+        `configuration.CHANNEL_NAME`: Dirección del canal a ir.  
+        `configuration.webbrowser`: Para generar la instancia del navegador.  
+        `configuration.webbrowser.binary`: Ruta del ejecutable del navegador preferido.  
+        `configuration.webbrowser.arguments`: Línea de argumentos para ejecutar el binario. (Actualmente, inicia con el Perfil 1 seleccionado)  
 
 ### Configuración de áreas para `config.json`
 Esto es tedioso, pues depende para cada usuario. Lo importante es saber las ubicaciones que queremos monitorear.  
@@ -44,8 +45,9 @@ while (1) {
     Write-Host -NoNewline "`rX: $X | Y: $Y"
 }
 ```
-> Es posible (99% seguro) que mi configuración de área Bonus SI te funcione.
-> Es posible (99% seguro) que mi configuración de área Finisher NO te funcione.
+> Es posible (99% seguro) que mi configuración de área Bonus SI te funcione.  
+> Es posible (99% seguro) que mi configuración de área Gambles SI te funcione.  
+> Es posible (99% seguro) que mi configuración de área Finisher NO te funcione.  
   
 Para esta tarea, te adjunto un pantallazo que explica todo.  
 ![Pantallazo](https://dev.crizacio.com/docs/assets/images/OWES-main-screenshot.png)  
