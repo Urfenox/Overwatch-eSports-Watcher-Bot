@@ -55,6 +55,7 @@ except KeyboardInterrupt:
     util.AddToLog("Setup skipped...")
 
 from OWEW.bonus import BonusCatcher
+from OWEW.gambles import GambleCatcher
 from OWEW.finisher import FinisherCatcher
 
 print("Creando instancias...")
@@ -62,6 +63,7 @@ time.sleep(5)
 print("    Bonus area: {}".format(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BONUS"]))
 print("    Finish area: {}".format(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"]))
 bc = BonusCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BONUS"], WORKSPACE)
+gc = GambleCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["GAMBLES"], WORKSPACE)
 fc = FinisherCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"])
 fc.createBase() # crea una imagen de referencia
 time.sleep(1)
@@ -72,6 +74,8 @@ while True:
     util.AddToLog("Buscando diferencias...")
     if bc.checkForBonus():
         util.AddToLog("Bonificación encontrada!")
+    if gc.checkForGamble():
+        util.PushoverNotify(mensaje="Predicción iniciada!", ttl=60)
     if fc.checkBase():
         # si una nueva imagen tiene diferencias a la de referencia
         #   esto puede ser cierto si:

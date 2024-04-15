@@ -29,16 +29,19 @@ class Utilities:
             logs.write(str(f"{log}\n"))
         return log
     
-    def PushoverNotify(self, mensaje, titulo = "OW eSports Watcher", prioridad = 0):
+    def PushoverNotify(self, mensaje, titulo = "OW eSports Watcher", prioridad = 0, ttl=0):
         if self.PUSHOVER_USER!=None and self.PUSHOVER_TOKEN!=None:
-            r = requests.post("https://api.pushover.net/1/messages.json", data = {
+            payload = {
                 "token": self.PUSHOVER_TOKEN,
                 "user": self.PUSHOVER_USER,
                 "device": self.PUSHOVER_DEVICE,
                 "title": titulo,
                 "message": mensaje,
                 "priority": prioridad
-            })
+            }
+            if ttl>0:
+                payload["ttl"] = ttl
+            r = requests.post("https://api.pushover.net/1/messages.json", data=payload)
             return self.AddToLog(str("({}) {}\n{}\n     ({})".format(prioridad, titulo, mensaje, r.text)))
         else:
             return self.AddToLog(str("({}) {}\n{}\n     (X)".format(prioridad, titulo, mensaje)))

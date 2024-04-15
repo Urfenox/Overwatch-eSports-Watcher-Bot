@@ -17,18 +17,21 @@ class BonusCatcher:
 
     # Metodos
     def checkForBonus(self)->bool:
-        # busca un match en la area indicada
-        bonus = pyautogui.locateOnScreen(image=str("{}\\bonus.png".format(self.WORKSPACE)), grayscale=True, region=self.MONITOR_AREA, confidence=0.8)
-        if bonus != None:
-            current_position = pyautogui.position()
-            self.claimCount += 1
-            self.lastClaim = time.strftime("%H:%M:%S", time.localtime())
-            pyautogui.moveTo(bonus[0]+20, bonus[1]+15) # mueve al premio
-            time.sleep(.5)
-            pyautogui.click(button='left') # hace el click
-            time.sleep(.5)
-            pyautogui.moveTo(current_position) # restablece la posicion del cursor
-            return True
+        try:
+            # busca un match en la area indicada
+            bonus = pyautogui.locateOnScreen(image=str("{}\\bonus.png".format(self.WORKSPACE)), grayscale=True, region=self.MONITOR_AREA, confidence=0.8)
+            if bonus != None:
+                current_position = pyautogui.position()
+                self.claimCount += 1
+                self.lastClaim = time.strftime("%H:%M:%S", time.localtime())
+                pyautogui.moveTo(bonus[0]+20, bonus[1]+15) # mueve al premio
+                time.sleep(.5)
+                pyautogui.click(button='left') # hace el click
+                time.sleep(.5)
+                pyautogui.moveTo(current_position) # restablece la posicion del cursor
+                return True
+        except:
+            return False
         return False
 
     def printInformation(self):
