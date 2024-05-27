@@ -35,5 +35,4 @@ class BonusCatcher:
         return False
 
     def printInformation(self):
-        print("Monitor area: {}".format(self.MONITOR_AREA))
         print("[{}] claimed | Last claim [{}]".format(self.claimCount, self.lastClaim))

@@ -5,6 +5,7 @@
     "uptime": "0:0:0",
     "configuration": {
         "PUSHOVER": {
+            "ENABLED": false,
             "TOKEN": "",
             "USER": "",
             "DEVICE": ""
@@ -24,6 +25,7 @@
                 }
             ]
         },
+        "SHUTDOWN_TIME": 300,
         "WAIT_TIME": 120,
         "CHANNEL_NAME": "twitch.tv/ow_esports",
         "webbrowser": {

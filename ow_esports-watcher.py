@@ -28,7 +28,7 @@ print("Workspace {}".format(WORKSPACE))
 try:
     util.AddToLog("Dirigiéndose a la transmisión...")
     print("    CTRL+C para omitir.")
-    time.sleep(5)
+    os.system(str("timeout 5"))
     util.PushoverNotify(mensaje=str("¡Iniciando {}!".format(INSTANCE_INFO["title"])), prioridad=1)
     time.sleep(1)
     os.spawnl(os.P_DETACH, INSTANCE_INFO["configuration"]["webbrowser"]["binary"], INSTANCE_INFO["configuration"]["webbrowser"]["arguments"]) # inicia la instancia del navegador
@@ -69,28 +69,25 @@ bc = BonusCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BO
 gc = GambleCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["GAMBLES"], WORKSPACE)
 fc = FinisherCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"])
 fc.createBase() # crea una imagen de referencia
-time.sleep(1)
+time.sleep(5)
+util.SendScreenshot("Estado de la instancia", ttl=120)
 
 while True:
     os.system("cls")
     bc.printInformation()
+    gc.printInformation()
     util.AddToLog("Buscando diferencias...")
     if bc.checkForBonus():
         util.AddToLog("Bonificación encontrada!")
     if gc.checkForGamble():
         util.PushoverNotify(mensaje="Predicción iniciada!", ttl=60)
     if fc.checkBase():
-        # si una nueva imagen tiene diferencias a la de referencia
-        #   esto puede ser cierto si:
-        #       - se realizo un RAID a otro canal (imposible mantener los mismos tags)
-        #       - la transmision finalizo (cuando una transmision termina, los tags desaparecen)
-        #       - algo interfiere con la visilidad de los tags (una ventana, tooltip, la pestaña no esta activa, etc)
         util.AddToLog("La transmisión ha finalizado!")
         uptime = fc.getUptime(INSTANCE_INFO["started"])
         INSTANCE_INFO["uptime"] = str("{}h:{}m:{}s".format(uptime[0], uptime[1], uptime[2]))
         util.PushoverNotify(mensaje=str("¡Transmisión finalizada!\nUptime: {}\nClaimed: {}".format(
             INSTANCE_INFO["uptime"],
             bc.claimCount)))
-        os.system("shutdown.exe /s /t 300") # apaga el equipo (5 minutos)
+        os.system(str("shutdown.exe /s /t {}".format(INSTANCE_INFO["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
         sys.exit(0)
     os.system(str("timeout {}".format(INSTANCE_INFO["configuration"]["WAIT_TIME"])))

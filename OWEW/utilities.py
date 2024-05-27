@@ -1,7 +1,8 @@
-import time
+import time, os
 import requests # pip install requests
 import win32gui # pip install pywin32
 import win32con # pip install pywin32
+import pyautogui # pip install pyautogui
 
 class Utilities:
     # Propiedades
@@ -29,8 +30,15 @@ class Utilities:
             logs.write(str(f"{log}\n"))
         return log
     
-    def PushoverNotify(self, mensaje, titulo = "OW eSports Watcher", prioridad = 0, ttl=0):
-        if self.PUSHOVER_USER!=None and self.PUSHOVER_TOKEN!=None:
+    def SendScreenshot(self, mensaje, prioridad=1, ttl=60):
+        imagePath = str("{}\\imagen.png".format(self.WORKSPACE))
+        screenshot = pyautogui.screenshot()
+        screenshot.save(imagePath)
+        self.PushoverNotify(mensaje=str(mensaje), prioridad=prioridad, file=imagePath, ttl=ttl)
+        os.remove(imagePath)
+
+    def PushoverNotify(self, mensaje, titulo = "OW eSports Watcher", prioridad = 0, file=None, ttl=0):
+        if self.PUSHOVER_USER!="" and self.PUSHOVER_TOKEN!="":
             payload = {
                 "token": self.PUSHOVER_TOKEN,
                 "user": self.PUSHOVER_USER,
@@ -41,7 +49,9 @@ class Utilities:
             }
             if ttl>0:
                 payload["ttl"] = ttl
-            r = requests.post("https://api.pushover.net/1/messages.json", data=payload)
+            if file != None:
+                file = {"attachment": ("image.png", open(file, "rb"), "image/png")}
+            r = requests.post("https://api.pushover.net/1/messages.json", data=payload, files=file)
             return self.AddToLog(str("({}) {}\n{}\n     ({})".format(prioridad, titulo, mensaje, r.text)))
         else:
             return self.AddToLog(str("({}) {}\n{}\n     (X)".format(prioridad, titulo, mensaje)))
