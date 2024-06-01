@@ -31,6 +31,7 @@ class GambleCatcher:
             else: # si no hay una prediccion
                 self.newGamble = True # indica que no hay predicciones nuevas
         except: # en nuevas versiones de PyAutoGUI, si no se encuentra se genera un error
+            self.newGamble = True # si falla no encuentra, si no encuentra restablecemos
             return False
         return False # sin predicciones (defecto)
     
