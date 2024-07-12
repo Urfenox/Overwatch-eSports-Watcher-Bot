@@ -2,21 +2,23 @@ import time, os
 import requests # pip install requests
 import win32gui # pip install pywin32
 import win32con # pip install pywin32
-import pyautogui # pip install pyautogui
+from PIL import ImageGrab, ImageDraw # pip install Pillow
 
 class Utilities:
     # Propiedades
     WORKSPACE = None
+    INSTANCE_INFO = None
     PUSHOVER_TOKEN = None
     PUSHOVER_USER = None
     PUSHOVER_DEVICE = None
 
     # Constructor
-    def __init__(self, workspace: str, pushover_token: str, pushover_user: str, pushover_device: str):
+    def __init__(self, workspace: str, instance_info: dict):
         self.WORKSPACE = workspace
-        self.PUSHOVER_TOKEN = pushover_token
-        self.PUSHOVER_USER = pushover_user
-        self.PUSHOVER_DEVICE = pushover_device
+        self.INSTANCE_INFO = instance_info
+        self.PUSHOVER_TOKEN = instance_info["configuration"]["PUSHOVER"]["TOKEN"]
+        self.PUSHOVER_USER = instance_info["configuration"]["PUSHOVER"]["USER"]
+        self.PUSHOVER_DEVICE = instance_info["configuration"]["PUSHOVER"]["DEVICE"]
         with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
             logs.write(str("\n\n\n"))
 
@@ -32,8 +34,12 @@ class Utilities:
     
     def SendScreenshot(self, mensaje, prioridad=1, ttl=60):
         imagePath = str("{}\\imagen.png".format(self.WORKSPACE))
-        screenshot = pyautogui.screenshot()
-        screenshot.save(imagePath)
+        screenshow = ImageGrab.grab(all_screens=True)  # Take the screenshot
+        draw = ImageDraw.Draw(screenshow)
+        draw.rectangle(self.INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][self.INSTANCE_INFO["configuration"]["MONITOR"]["SCREEN"]]["BONUS"])
+        draw.rectangle(self.INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][self.INSTANCE_INFO["configuration"]["MONITOR"]["SCREEN"]]["GAMBLES"])
+        draw.rectangle(self.INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][self.INSTANCE_INFO["configuration"]["MONITOR"]["SCREEN"]]["FINISHER"])
+        screenshow.save(imagePath, "png")
         self.PushoverNotify(mensaje=str(mensaje), prioridad=prioridad, file=imagePath, ttl=ttl)
         os.remove(imagePath)
 

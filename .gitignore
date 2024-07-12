@@ -1,4 +1,5 @@
 
+.venv
 *.lnk
 __pycache__
 *.zip

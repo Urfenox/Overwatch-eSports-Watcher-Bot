@@ -15,9 +15,8 @@ os.system(str("title {}".format(INSTANCE_INFO["title"])))
 
 util = Utilities(
     WORKSPACE,
-    INSTANCE_INFO["configuration"]["PUSHOVER"]["TOKEN"],
-    INSTANCE_INFO["configuration"]["PUSHOVER"]["USER"],
-    INSTANCE_INFO["configuration"]["PUSHOVER"]["DEVICE"])
+    INSTANCE_INFO
+)
 
 time.sleep(1) # hace que setTopMost funcione, idk why lol
 util.setTopMost(win32gui.FindWindow(None, INSTANCE_INFO["title"]))
