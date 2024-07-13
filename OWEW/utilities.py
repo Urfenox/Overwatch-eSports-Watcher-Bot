@@ -34,7 +34,7 @@ class Utilities:
     
     def SendScreenshot(self, mensaje, prioridad=1, ttl=60):
         imagePath = str("{}\\imagen.png".format(self.WORKSPACE))
-        screenshow = ImageGrab.grab(all_screens=True)  # Take the screenshot
+        screenshow = ImageGrab.grab(all_screens=True) # Take the screenshot
         draw = ImageDraw.Draw(screenshow)
         draw.rectangle(self.INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][self.INSTANCE_INFO["configuration"]["MONITOR"]["SCREEN"]]["BONUS"])
         draw.rectangle(self.INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][self.INSTANCE_INFO["configuration"]["MONITOR"]["SCREEN"]]["GAMBLES"])
