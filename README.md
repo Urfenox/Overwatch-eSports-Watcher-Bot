@@ -9,16 +9,10 @@ https://dev.crizacio.com/docs/Overwatch-eSports-Watcher-Bot
  - Reclama los botines por mirar durante 15 minutos.  
  - Notifica cuando comienza una predicción.  
  - Apaga el equipo cuando una transmisión finaliza.  
- - Realiza notificaciones mediante Pushover.  
+ - Realiza notificaciones mediante Pushover (Inicio, predicción y final).  
   
 ## Uso
- 1. Primero descarga las librerías necesarias con `pip`:  
-        `pip pyautogui install`  
-        `pip pywin32 install`  
-        `pip pillow install`  
-        `pip requests install`  
-        `pip opencv-python install`  
-    o, a través de `requirements.txt`:  
+ 1. Descarga e instala las librerias Python necesarias a través de `requirements.txt`:  
         `pip install -r requirements.txt`  
  2. Luego toca modificar `config.json` dentro de la carpeta `/OWEW`:  
         `title`: Nombre para identificar la ventana. (Ni símbolos, ni números)  
@@ -26,6 +20,7 @@ https://dev.crizacio.com/docs/Overwatch-eSports-Watcher-Bot
         `configuration.MONITOR`: Configuración de pantalla y áreas.  
         `configuration.MONITOR.SCREEN`: Pantalla a utilizar. (Configuración de pantalla)  
         `configuration.MONITOR.AREA`: Definiciones de áreas para cada pantalla. (Hay dos configuraciónes, para dos monitores uno al lado del otro. Pero puedes agregar más)  
+        `configuration.SHUTDOWN_TIME`: Tiempo de espera para el apagado al final de la transmision. (300s=5minutos por defecto)  
         `configuration.WAIT_TIME`: Tiempo de espera entre verificaciones de estado. (120s=2minutos por defecto)  
         `configuration.CHANNEL_NAME`: Dirección del canal a ir.  
         `configuration.webbrowser`: Para generar la instancia del navegador.  

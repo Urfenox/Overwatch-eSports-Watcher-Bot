@@ -39,8 +39,14 @@ class FinisherCatcher:
     def getUptime(self, timestamp: datetime)->list:
         duration = datetime.now() - timestamp
         duration_in_s = duration.total_seconds()
-        days    = divmod(duration_in_s, 86400)
-        hours   = divmod(days[1], 3600)
+        days = divmod(duration_in_s, 86400)
+        hours = divmod(days[1], 3600)
         minutes = divmod(hours[1], 60)
         seconds = divmod(minutes[1], 1)
         return [round(hours[0]), round(minutes[0]), round(seconds[0])]
+    
+    def AddToLog(self, content)->str: # mantiene un registro de lo que pasa
+        log = str("{} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
+        with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
+            logs.write(str(f"{log}\n"))
+        return log

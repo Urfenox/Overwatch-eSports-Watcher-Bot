@@ -1,7 +1,6 @@
 from OWEW.utilities import Utilities
 from datetime import datetime
 import time, os, sys, json
-import pyautogui # pip install pyautogui
 import win32gui # pip install pywin32
 os.system("cls")
 
@@ -23,37 +22,16 @@ util.setTopMost(win32gui.FindWindow(None, INSTANCE_INFO["title"]))
 
 print("Workspace {}".format(WORKSPACE))
 
-# Inicia el Setup
+from OWEW.steps import setup
 try:
     util.AddToLog("Dirigiéndose a la transmisión...")
     print("    CTRL+C para omitir.")
     os.system(str("timeout 5"))
     util.PushoverNotify(mensaje=str("¡Iniciando {}!".format(INSTANCE_INFO["title"])), prioridad=1)
-    time.sleep(1)
-    os.spawnl(os.P_DETACH, INSTANCE_INFO["configuration"]["webbrowser"]["binary"], INSTANCE_INFO["configuration"]["webbrowser"]["arguments"]) # inicia la instancia del navegador
-    time.sleep(5)
-    pyautogui.moveTo(100, 1) # selecciona la barra del navegador
-    pyautogui.click(button='left') # hace clic en la pestaña para hacer focus en el navegador
-    time.sleep(.5)
-    pyautogui.hotkey('ctrl', 'l') # selecciona la barra de direcciones
-    time.sleep(1)
-    pyautogui.typewrite(INSTANCE_INFO["configuration"]["CHANNEL_NAME"], interval=0.2) # escribe twitch.tv/ow_esports
-    pyautogui.press('enter') # presiona enter para buscar el canal
-    time.sleep(5)
-    pyautogui.moveTo(1000, 350, duration=2) # seleccionar el banner del canal
-    pyautogui.click(button='left') # hace clic en el banner para ver la transmision
-    time.sleep(5)
-    pyautogui.moveTo(1464, 823, duration=1) # selecciona la configuracion de transmision
-    pyautogui.click(button='left') # hace click
-    time.sleep(.5)
-    pyautogui.moveTo(1464, 580, duration=1) # selecciona calidad
-    pyautogui.click(button='left') # hace click
-    time.sleep(.5)
-    pyautogui.moveTo(1280, 720, duration=1) # selecciona 480p
-    pyautogui.click(button='left') # hace click
-    time.sleep(1)
-    pyautogui.moveTo(1160, 860, duration=1) # posiciona el cursor
+    setup(INSTANCE_INFO)
+    os.system("cls")
 except KeyboardInterrupt:
+    os.system("cls")
     util.AddToLog("Setup skipped...")
 
 from OWEW.bonus import BonusCatcher
@@ -61,14 +39,14 @@ from OWEW.gambles import GambleCatcher
 from OWEW.finisher import FinisherCatcher
 
 print("Creando instancias...")
-time.sleep(5)
+time.sleep(1)
 print("    Bonus area: {}".format(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BONUS"]))
 print("    Finish area: {}".format(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"]))
 bc = BonusCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["BONUS"], WORKSPACE)
 gc = GambleCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["GAMBLES"], WORKSPACE)
 fc = FinisherCatcher(INSTANCE_INFO["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"])
 fc.createBase() # crea una imagen de referencia
-time.sleep(5)
+time.sleep(1)
 util.SendScreenshot("Estado de la instancia", ttl=120)
 
 while True:

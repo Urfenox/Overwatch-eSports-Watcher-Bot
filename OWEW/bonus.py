@@ -36,9 +36,16 @@ class BonusCatcher:
                 time.sleep(.5)
                 pyautogui.moveTo(current_position) # restablece la posicion del cursor
                 return True
-        except:
+        except Exception as ex:
+            self.AddToLog(str("[!]{}".format(ex)))
             return False
         return False
 
     def printInformation(self):
         print("[{}] claimed | Last claim [{}]".format(self.claimCount, self.lastClaim))
+
+    def AddToLog(self, content)->str: # mantiene un registro de lo que pasa
+        log = str("BONUS {} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
+        with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
+            logs.write(str(f"{log}\n"))
+        return log
