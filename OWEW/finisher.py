@@ -1,5 +1,4 @@
 import time
-import pyautogui # pip install pyautogui
 from PIL import ImageChops # pip install pillow
 from PIL import ImageGrab # pip install pillow
 from datetime import datetime
@@ -27,12 +26,6 @@ class FinisherCatcher:
         diff = ImageChops.difference(ImageGrab.grab(bbox=self.MONITOR_AREA, all_screens=True), self.imgBase)
         bbox = diff.getbbox()
         if bbox is not None:
-            current_position = pyautogui.position()
-            pyautogui.hotkey('ctrl', 'f4') # cierra la pestaña activa
-            pyautogui.moveTo(self.CLOSE_BUTTON, duration=1) # boton cerrar navegador
-            pyautogui.click(button='left') # hace el click
-            time.sleep(0.5)
-            pyautogui.moveTo(current_position)
             return True # el streaming termino
         return False # el streaming sigue
 
@@ -44,9 +37,3 @@ class FinisherCatcher:
         minutes = divmod(hours[1], 60)
         seconds = divmod(minutes[1], 1)
         return [round(hours[0]), round(minutes[0]), round(seconds[0])]
-    
-    def AddToLog(self, content)->str: # mantiene un registro de lo que pasa
-        log = str("{} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
-        with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
-            logs.write(str(f"{log}\n"))
-        return log

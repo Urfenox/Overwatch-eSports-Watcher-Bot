@@ -22,7 +22,7 @@ util.setTopMost(win32gui.FindWindow(None, INSTANCE_INFO["title"]))
 
 print("Workspace {}".format(WORKSPACE))
 
-from OWEW.steps import setup
+from OWEW.steps import setup, banish
 try:
     util.AddToLog("Dirigiéndose a la transmisión...")
     print("    CTRL+C para omitir.")
@@ -65,6 +65,6 @@ while True:
         util.PushoverNotify(mensaje=str("¡Transmisión finalizada!\nUptime: {}\nClaimed: {}".format(
             INSTANCE_INFO["uptime"],
             bc.claimCount)))
-        os.system(str("shutdown.exe /s /t {}".format(INSTANCE_INFO["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
+        banish(INSTANCE_INFO)
         sys.exit(0)
     os.system(str("timeout {}".format(INSTANCE_INFO["configuration"]["WAIT_TIME"])))

@@ -1,6 +1,7 @@
 import os, time
 import pyautogui # pip install pyautogui
 
+
 # AQUI DEBES INDICAR LOS PASOS PARA EL SETUP DE TU NAVEGADOR WEB.
 # A CONTINUACION SE MUESTRA UN EJEMPLO...
 
@@ -32,23 +33,50 @@ def setup(INSTANCE_INFO):
     pyautogui.moveTo(1000, 350, duration=2) # seleccionar el banner del canal
     pyautogui.click(button='left') # hace clic en el banner para ver la transmision
 
-    time.sleep(5)
+    # time.sleep(5)
 
-    pyautogui.moveTo(1464, 823, duration=1) # selecciona la configuracion de transmision
-    pyautogui.click(button='left') # hace click
+    # pyautogui.moveTo(1464, 830, duration=1) # selecciona la configuracion de transmision
+    # pyautogui.click(button='left') # hace click
 
-    time.sleep(.5)
+    # time.sleep(.5)
 
-    pyautogui.moveTo(1464, 580, duration=1) # selecciona calidad
-    pyautogui.click(button='left') # hace click
+    # pyautogui.moveTo(1464, 630, duration=1) # selecciona calidad
+    # pyautogui.click(button='left') # hace click
 
-    time.sleep(.5)
+    # time.sleep(.5)
 
-    pyautogui.moveTo(1280, 720, duration=1) # selecciona 480p
-    pyautogui.click(button='left') # hace click
+    # pyautogui.moveTo(1464, 660, duration=1) # selecciona 720p60
+    # pyautogui.click(button='left') # hace click
 
     time.sleep(1)
     
-    pyautogui.moveTo(1160, 860, duration=1) # posiciona el cursor
+    pyautogui.moveTo(1470, 960) # posiciona el cursor
 
-# SI, SE QUE SE PUEDE USAR SELENIUM, PERO ESO ME DA MUCHA PAJA JKSJSJSJK
+
+# AQUI DEBES INDICAR LOS PASOS PARA EL BANISH DE LA ACCION FINALIZAR.
+# A CONTINUACION SE MUESTRA UN EJEMPLO...
+
+def banish(INSTANCE_INFO):
+    pyautogui.hotkey('ctrl', 'f4') # cierra la pestaña activa
+
+    time.sleep(0.2)
+
+    pyautogui.hotkey('alt', 'f4') # cierra la ventana
+
+    time.sleep(0.2)
+
+    if INSTANCE_INFO["configuration"]["MUST_SHUTDOWN"]: # apaga el equipo
+        os.system(str("shutdown.exe /s /t {}".format(INSTANCE_INFO["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
+    else: # suspende el equipo
+        pyautogui.moveTo(20, 1060) # selecciona el icono Windows
+        pyautogui.click(button='left') # hace clic
+
+        time.sleep(0.5)
+
+        pyautogui.moveTo(25, 1015) # selecciona el icono de Inicio/Apagado
+        pyautogui.click(button='left') # hace clic
+
+        time.sleep(0.5)
+
+        pyautogui.moveTo(25, 900, duration=1) # selecciona el icono de Suspender
+        pyautogui.click(button='left') # hace clic
