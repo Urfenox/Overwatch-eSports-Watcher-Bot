@@ -1,5 +1,8 @@
 import os, time
 import pyautogui # pip install pyautogui
+import ctypes
+import win32api
+import win32security
 
 # AQUI DEBES INDICAR LOS PASOS PARA EL SETUP DE TU NAVEGADOR WEB.
 # A CONTINUACION SE MUESTRA UN EJEMPLO...
@@ -51,4 +54,39 @@ def setup(INSTANCE_INFO):
     
     pyautogui.moveTo(1160, 860, duration=1) # posiciona el cursor
 
-# SI, SE QUE SE PUEDE USAR SELENIUM, PERO ESO ME DA MUCHA PAJA JKSJSJSJK
+
+# AQUI DEBES INDICAR LOS PASOS PARA EL FIN DE LOS TIEMPOS.
+# A CONTINUACION SE MUESTRA UN EJEMPLO...
+
+def conclude(hibernate=False):
+    priv_flags = (win32security.TOKEN_ADJUST_PRIVILEGES |
+                  win32security.TOKEN_QUERY)
+    hToken = win32security.OpenProcessToken(
+        win32api.GetCurrentProcess(),
+        priv_flags
+    )
+    priv_id = win32security.LookupPrivilegeValue(
+       None,
+       win32security.SE_SHUTDOWN_NAME
+    )
+    old_privs = win32security.AdjustTokenPrivileges(
+        hToken,
+        0,
+        [(priv_id, win32security.SE_PRIVILEGE_ENABLED)]
+    )
+
+    if (win32api.GetPwrCapabilities()['HiberFilePresent'] == False and
+        hibernate == True):
+            import warnings
+            warnings.warn("Hibernate isn't available. Suspending.")
+    try:
+        ctypes.windll.powrprof.SetSuspendState(not hibernate, True, False)
+    except:
+        win32api.SetSystemPowerState(not hibernate, True)
+
+    # Restore previous privileges
+    win32security.AdjustTokenPrivileges(
+        hToken,
+        0,
+        old_privs
+    )
