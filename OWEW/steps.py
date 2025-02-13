@@ -27,7 +27,7 @@ def setup(INSTANCE_INFO):
 
     time.sleep(1)
 
-    pyautogui.typewrite(INSTANCE_INFO["configuration"]["CHANNEL_NAME"], interval=0.2) # escribe twitch.tv/ow_esports
+    pyautogui.typewrite(INSTANCE_INFO["configuration"]["CHANNEL_NAME"], interval=0.2) # escribe twitch.tv/...
     pyautogui.press('enter') # presiona enter para buscar el canal
 
     time.sleep(5)
