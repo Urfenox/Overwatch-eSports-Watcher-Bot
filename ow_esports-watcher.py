@@ -68,7 +68,7 @@ while True:
             CONFIGURATION["uptime"],
             bc.claimCount,
             gc.predictCount)))
-        # os.system(str("timeout {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))); conclude() # suspende el equipo
-        os.system(str("shutdown.exe /s /t {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
+        os.system(str("timeout {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))); conclude() # suspende el equipo
+        # os.system(str("shutdown.exe /s /t {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
         sys.exit(0)
     os.system(str("timeout {}".format(CONFIGURATION["configuration"]["WAIT_TIME"])))

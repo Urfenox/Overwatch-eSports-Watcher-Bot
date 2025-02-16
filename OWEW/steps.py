@@ -1,6 +1,5 @@
-import os, time
+import os, time, ctypes
 import pyautogui # pip install pyautogui
-import ctypes
 import win32api
 import win32security
 
@@ -12,16 +11,24 @@ def setup(INSTANCE_INFO):
 
     os.spawnl(
         os.P_DETACH,
-        INSTANCE_INFO["configuration"]["webbrowser"]["binary"],
-        INSTANCE_INFO["configuration"]["webbrowser"]["arguments"]
+        INSTANCE_INFO["configuration"]["webbrowser"]["binary"], # ejecutable
+        INSTANCE_INFO["configuration"]["webbrowser"]["arguments"] # argumentos
     ) # inicia la instancia del navegador
 
-    time.sleep(5)
+    time.sleep(5) # da tiempo a abrir el navegador
 
-    pyautogui.moveTo(100, 1) # selecciona la barra del navegador
+    pyautogui.moveTo(100, 1) # pone el cursor en la pestaña principal
     pyautogui.click(button='left') # hace clic en la pestaña para hacer focus en el navegador
 
-    time.sleep(.5)
+    time.sleep(1)
+
+    for i in range(5):
+        pyautogui.hotkey('ctrl', 'f4') # cierra la pestaña
+        time.sleep(.5)
+
+    pyautogui.hotkey('ctrl', '1') # selecciona la primera pestaña
+
+    time.sleep(1)
 
     pyautogui.hotkey('ctrl', 'l') # selecciona la barra de direcciones
 
@@ -30,29 +37,13 @@ def setup(INSTANCE_INFO):
     pyautogui.typewrite(INSTANCE_INFO["configuration"]["CHANNEL_NAME"], interval=0.2) # escribe twitch.tv/...
     pyautogui.press('enter') # presiona enter para buscar el canal
 
-    time.sleep(5)
+    # time.sleep(10) # da tiempo el sitio
+    # pyautogui.moveTo(1000, 350, duration=2) # seleccionar el banner del canal
+    # pyautogui.click(button='left') # hace clic en el banner para ver la transmision
 
-    pyautogui.moveTo(1000, 350, duration=2) # seleccionar el banner del canal
-    pyautogui.click(button='left') # hace clic en el banner para ver la transmision
+    time.sleep(10) # da tiempo para cargar la transmision
 
-    time.sleep(5)
-
-    pyautogui.moveTo(1464, 823, duration=1) # selecciona la configuracion de transmision
-    pyautogui.click(button='left') # hace click
-
-    time.sleep(.5)
-
-    pyautogui.moveTo(1464, 580, duration=1) # selecciona calidad
-    pyautogui.click(button='left') # hace click
-
-    time.sleep(.5)
-
-    pyautogui.moveTo(1280, 720, duration=1) # selecciona 480p
-    pyautogui.click(button='left') # hace click
-
-    time.sleep(1)
-    
-    pyautogui.moveTo(1160, 860, duration=1) # posiciona el cursor
+    pyautogui.moveTo(1545, 950, duration=1) # posiciona el cursor
 
 
 # AQUI DEBES INDICAR LOS PASOS PARA EL FIN DE LOS TIEMPOS.
@@ -90,3 +81,16 @@ def conclude(hibernate=False):
         0,
         old_privs
     )
+
+
+# TESTING ONLY
+if __name__ == "__main__":
+    import os, json, winsound
+    print("Este archivo se ejecutó directamente")
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    WORKSPACE = str(os.path.dirname(os.path.realpath(__file__)))
+    CONFIGURATION = json.load(open(str("{}\\config.json".format(WORKSPACE))))
+    setup(CONFIGURATION)
+    winsound.Beep(2500, 500)
+    winsound.Beep(2500, 500)
+    os.system("pause")
