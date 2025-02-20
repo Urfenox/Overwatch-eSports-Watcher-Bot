@@ -44,7 +44,11 @@ class GambleCatcher:
         print("[{}] predictions | Last prediction [{}]".format(self.predictCount, self.lastPredict))
     
     def AddToLog(self, content)->str: # mantiene un registro de lo que pasa
-        log = str("GAMBLES {} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
-        with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
-            logs.write(str(f"{log}\n"))
-        return log
+        try:
+            log = str("GAMBLES {} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
+            with open(str("{}\\logs.log".format(self.WORKSPACE)), "a", encoding='UTF-8') as logs:
+                logs.write(str(f"{log}\n"))
+            return log
+        except Exception as ex:
+            pass
+        return "Error"

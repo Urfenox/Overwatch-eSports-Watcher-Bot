@@ -29,6 +29,7 @@ class FinisherCatcher:
         if bbox is not None:
             current_position = pyautogui.position()
             pyautogui.hotkey('ctrl', 'f4') # cierra la pestaña activa
+            time.sleep(0.5)
             pyautogui.moveTo(self.CLOSE_BUTTON, duration=1) # boton cerrar navegador
             pyautogui.click(button='left') # hace el click
             time.sleep(0.5)
@@ -44,9 +45,3 @@ class FinisherCatcher:
         minutes = divmod(hours[1], 60)
         seconds = divmod(minutes[1], 1)
         return [round(hours[0]), round(minutes[0]), round(seconds[0])]
-    
-    def AddToLog(self, content)->str: # mantiene un registro de lo que pasa
-        log = str("{} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
-        with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
-            logs.write(str(f"{log}\n"))
-        return log

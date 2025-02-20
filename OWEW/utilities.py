@@ -29,7 +29,7 @@ class Utilities:
         try:
             log = str("{} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
             print(log)
-            with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
+            with open(str("{}\\logs.log".format(self.WORKSPACE)), "a", encoding='UTF-8') as logs:
                 logs.write(str(f"{log}\n"))
             return log
         except Exception as ex:

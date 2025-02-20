@@ -45,7 +45,10 @@ class BonusCatcher:
         print("[{}] claimed | Last claim [{}]".format(self.claimCount, self.lastClaim))
 
     def AddToLog(self, content)->str: # mantiene un registro de lo que pasa
-        log = str("BONUS {} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
-        with open(str("{}\\logs.log".format(self.WORKSPACE)), "a") as logs:
-            logs.write(str(f"{log}\n"))
-        return log
+        try:
+            log = str("BONUS {} {}".format(time.strftime("%H:%M:%S %d/%m", time.localtime()), content))
+            with open(str("{}\\logs.log".format(self.WORKSPACE)), "a", encoding='UTF-8') as logs:
+                logs.write(str(f"{log}\n"))
+            return log
+        except Exception as ex:
+            return ""
