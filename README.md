@@ -1,22 +1,21 @@
 # Overwatch eSports Watcher
 Script que automatiza el ponerse a ver una transmisión de la ow_esports en Twitch.  
-  
-#### Documentación
-https://dev.crizacio.com/docs/Overwatch-eSports-Watcher-Bot  
-  
-### Features
+
+El script principal es `ow_esports-watcher.py`.  
+
+## Features
  - Abre un navegador y accede a una transmisión.  
  - Reclama los botines por mirar durante 15 minutos.  
  - Notifica cuando comienza una predicción.  
  - Apaga el equipo cuando una transmisión finaliza.  
  - Realiza notificaciones mediante Pushover (Inicio, predicción y final).  
   
-## Uso
+## Setup
  1. Descarga e instala las librerias Python necesarias a través de `requirements.txt`:  
         `pip install -r requirements.txt`  
  2. Luego toca modificar `config.json` dentro de la carpeta `/OWEW`:  
         `title`: Nombre para identificar la ventana. (Ni símbolos, ni números)  
-        `configuration.PUSHOVER`: Credenciales de Pushover: USER y APP TOKEN, junto con el dispositivo que recibirá notificación.  
+        `configuration.PUSHOVER`: Credenciales de [Pushover: USER y APP TOKEN](https://pushover.net/api), junto con el dispositivo que recibirá notificación.  
         `configuration.MONITOR`: Configuración de pantalla y áreas.  
         `configuration.MONITOR.SCREEN`: Pantalla a utilizar. (Configuración de pantalla)  
         `configuration.MONITOR.AREA`: Definiciones de áreas para cada pantalla. (Hay dos configuraciónes, para dos monitores uno al lado del otro. Pero puedes agregar más)  
@@ -40,12 +39,20 @@ while (1) {
     Write-Host -NoNewline "`rX: $X | Y: $Y"
 }
 ```
-> Es posible (99% seguro) que mi configuración de área Bonus SI te funcione.  
-> Es posible (99% seguro) que mi configuración de área Gambles SI te funcione.  
-> Es posible (99% seguro) que mi configuración de área Finisher NO te funcione.  
-  
+> Si usas Vivaldi, en un monitor FULL HD (1920x1080), sin escalado (100%), la página de Twitch tiene el Chat y el panel izquierdo activo y el taskbar no se oculta automáticamente: Es posible que la configuración por defecto de las áreas funcione correctamente. (Un ejemplo en la siguiente imagen)  
+
 Para esta tarea, te adjunto un pantallazo que explica todo.  
 ![Pantallazo](https://dev.crizacio.com/docs/assets/images/OWES-main-screenshot.png)  
   
+### Opciones
+El script acepta varios argumentos de entrada para una personalizacion o para controlar el comportamiento.  
+
+ - `-w CANAL` o `--watch CANAL`: Indica el nombre del `CANAL` de Twitch a ver. Defecto: `ow_esports`. Ejemplo: `-w playoverwatch`
+ - `-s PANTALLA` o `--screen PANTALLA`: Indica el índice de la `PANTALLA` a utilizar. Defecto: `0` (pantalla principal). Ejemplo: `-s 1` (pantalla secundaria)
+ - `-c TIEMPO` o `--check TIEMPO`: Indica el tiempo de intervalo antes de verificar los bonuses, predicciones o finalización. Defecto `120` (segundos). Ejemplo `-c 300` (300 segundos o 5 minutos)
+ - `-a` o `--awake`: Si se indica, al finalizar la transmisión el script se detendrá sin suspender el equipo. Actualmente, el equipo entrará en modo suspensión después de 5 minutos.
+ - `-n` o `--next`: Si se indica, se omitirá el setup del navegador.
+
+
 ## Como funciona
 gg
