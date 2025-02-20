@@ -24,17 +24,31 @@ util.setTopMost(win32gui.FindWindow(None, CONFIGURATION["title"]))
 
 print("Workspace {}".format(WORKSPACE))
 
+mensaje_inicio = str("¡Iniciando {}!".format(CONFIGURATION["title"]))
+mensaje_inicio += str("\nMonitorear pantalla " + str(MONITOR+1) + " cada " + str(CONFIGURATION["configuration"]["WAIT_TIME"]) + "s")
+if CONFIGURATION["configuration"]["CHANNEL_NAME"]:
+    mensaje_inicio += str("\nVer " + str(CONFIGURATION["configuration"]["CHANNEL_NAME"]))
+else:
+    mensaje_inicio += str("\nSetup omitido")
+if not CONFIGURATION["configuration"]["SHUTDOWN_TIME"] == False:
+    mensaje_inicio += str("\nApagar en " + str(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]) + "s")
+else:
+    mensaje_inicio += str("\nMantener encendido al finalizar")
+util.PushoverNotify(mensaje=mensaje_inicio, prioridad=1)
+
 from OWEW.steps import setup, conclude
 try:
-    util.AddToLog("Dirigiéndose a la transmisión...")
-    print("    CTRL+C para omitir.")
-    os.system(str("timeout 5"))
-    util.PushoverNotify(mensaje=str("¡Iniciando {}!".format(CONFIGURATION["title"])), prioridad=1)
-    setup(CONFIGURATION)
-    os.system("cls")
+    if CONFIGURATION["configuration"]["CHANNEL_NAME"]:
+        util.AddToLog("Dirigiéndose a la transmisión...")
+        print("    CTRL+C para omitir el setup.")
+        os.system(str("timeout 5"))
+        setup(CONFIGURATION)
+        os.system("cls")
+    else:
+        util.AddToLog("Omitiendo el setup...")
 except KeyboardInterrupt:
     os.system("cls")
-    util.AddToLog("Setup skipped...")
+    util.AddToLog("Omitiendo el setup...")
 
 from OWEW.bonus import BonusCatcher
 from OWEW.gambles import GambleCatcher
@@ -49,7 +63,7 @@ gc = GambleCatcher(CONFIGURATION["configuration"]["MONITOR"]["AREA"][MONITOR]["G
 fc = FinisherCatcher(CONFIGURATION["configuration"]["MONITOR"]["AREA"][MONITOR]["FINISHER"])
 fc.createBase() # crea una imagen de referencia
 time.sleep(1)
-util.SendScreenshot("Estado de la instancia", ttl=120)
+util.SendScreenshot("Estado de la instancia", ttl=300)
 
 while True:
     os.system("cls")
@@ -68,7 +82,9 @@ while True:
             CONFIGURATION["uptime"],
             bc.claimCount,
             gc.predictCount)))
-        os.system(str("timeout {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))); conclude() # suspende el equipo
-        # os.system(str("shutdown.exe /s /t {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
+        time.sleep(5)
+        if not CONFIGURATION["configuration"]["SHUTDOWN_TIME"] == False:
+            os.system(str("timeout {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))); conclude() # suspende el equipo
+            # os.system(str("shutdown.exe /s /t {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
         sys.exit(0)
     os.system(str("timeout {}".format(CONFIGURATION["configuration"]["WAIT_TIME"])))
