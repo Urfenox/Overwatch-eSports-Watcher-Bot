@@ -2,6 +2,7 @@ from OWEW.utilities import Utilities
 from OWEW.config import *
 from datetime import datetime
 import time, os, sys
+import pyautogui # pip install pyautogui
 import win32gui # pip install pywin32
 os.system("cls")
 
@@ -66,6 +67,7 @@ time.sleep(1)
 util.SendScreenshot("Estado de la instancia", ttl=300)
 
 while True:
+    time.sleep(4)
     os.system("cls")
     bc.printInformation()
     gc.printInformation()
@@ -87,4 +89,6 @@ while True:
             os.system(str("timeout {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))); conclude() # suspende el equipo
             # os.system(str("shutdown.exe /s /t {}".format(CONFIGURATION["configuration"]["SHUTDOWN_TIME"]))) # apaga el equipo
         sys.exit(0)
+    #pyautogui.hotkey('f') # activa la pantalla completa
     os.system(str("timeout {}".format(CONFIGURATION["configuration"]["WAIT_TIME"])))
+    #pyautogui.hotkey('f') # quita la pantalla completa
